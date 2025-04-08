@@ -14,6 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -22,7 +23,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class Config {
     @Autowired
-    private MyService userDetailsService;
+    private MyService  userDetailsService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
@@ -44,7 +45,8 @@ public class Config {
 //        http.csrf(custcsrf);
         .build();
    }
-//@Bean
+
+//    @Bean
 //    public UserDetailsService userDetailsService(){
 //    UserDetails user1= User
 //            .withDefaultPasswordEncoder()
@@ -64,7 +66,7 @@ public class Config {
         @Bean
         public AuthenticationProvider authenticationProvider(){
             DaoAuthenticationProvider provider=new DaoAuthenticationProvider();
-            provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+            provider.setPasswordEncoder(new BCryptPasswordEncoder(12));
             provider.setUserDetailsService(userDetailsService);
             return provider;
         }

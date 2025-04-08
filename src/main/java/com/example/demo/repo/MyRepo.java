@@ -1,8 +1,11 @@
 package com.example.demo.repo;
 
+import com.example.demo.Entity.Users;
 import jakarta.persistence.Id;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.security.core.userdetails.User;
 
-public interface MyRepo extends JpaRepository<User, Integer> {
+
+public interface MyRepo extends JpaRepository<Users, Integer> {
+    Users findByusername(String username);
+
 }
